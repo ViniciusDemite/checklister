@@ -12,20 +12,10 @@ use Illuminate\View\View;
 
 class TaskController extends Controller
 {
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     public function store(StoreTaskRequest $request, Checklist $checklist): RedirectResponse
     {
-        $checklist->tasks()->create($request->validated());
+        $position = $checklist->tasks()->max('position') + 1;
+        $checklist->tasks()->create($request->validated() + ['position' => $position]);
 
         return redirect()->route('admin.checklist_groups.checklist.edit', [
             $checklist->checklist_group_id, $checklist
@@ -48,6 +38,10 @@ class TaskController extends Controller
 
     public function destroy(Checklist $checklist, Task $task): RedirectResponse
     {
+        $checklist->tasks()->where('position', '>', $task->position)->update([
+            'position' => \DB::raw('position - 1')
+        ]);
+
         $task->delete();
 
         return redirect()->route('admin.checklist_groups.checklist.edit', [

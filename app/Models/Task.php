@@ -15,6 +15,7 @@ class Task extends Model
         'checklist_id',
         'name',
         'title',
-        'description'
+        'description',
+        'position'
     ];
 }
