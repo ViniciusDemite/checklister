@@ -7,7 +7,6 @@ use App\Http\Requests\StoreChecklistRequest;
 use App\Models\Checklist;
 use App\Models\ChecklistGroup;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ChecklistController extends Controller

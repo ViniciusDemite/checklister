@@ -5,10 +5,10 @@
         <div class="fade-in">
             <div class="row">
                 <div class="col-md-12">
-                    @if ($errors->any())
+                    @if ($errors->storetask->any())
                         <div class="alert alert-danger" role="alert">
                             <ul>
-                                @foreach ($errors->all() as $error)
+                                @foreach ($errors->storetask->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
@@ -16,10 +16,11 @@
                     @endif
 
                     <div class="card">
-                        <form action="{{ route('admin.checklist_groups.store') }}" method="POST">
+                        <form action="{{ route('admin.checklist.tasks.update', [$checklist, $task]) }}" method="POST">
                             @csrf
+                            @method('PUT')
 
-                            <div class="card-header">{{ __('New Checklist Group') }}</div>
+                            <div class="card-header">{{ __('Edit Task') }}</div>
 
                             <div class="card-body">
                                 <div class="row">
@@ -27,15 +28,19 @@
                                         <div class="form-group">
                                             <label for="name">{{ __('Name') }}</label>
                                             <input class="form-control" id="name" name="name" type="text"
-                                                placeholder="{{ __('Checklist group name') }}"
-                                                value="{{ old('name') }}">
+                                                value="{{ $task->name }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">{{ __('Description') }}</label>
+                                            <textarea name="description" id="description" cols="30" rows="5"
+                                                class="form-control">{{ $task->description }}</textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="card-footer">
-                                <button class="btn btn-sm btn-primary" type="submit"> {{ __('Save') }}</button>
+                                <button class="btn btn-sm btn-primary" type="submit"> {{ __('Save Task') }}</button>
                             </div>
                         </form>
                     </div>
