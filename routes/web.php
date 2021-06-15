@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('welcome', [\App\Http\Controllers\PageController::class, 'welcome'])->name('welcome');
     Route::get('consultation', [\App\Http\Controllers\PageController::class, 'consultation'])->name('consultation');
+
+    Route::get('checklists/{checklist}', [User\ChecklistController::class, 'show'])->name('user.checklists.show');
 
     Route::prefix('admin')->as('admin.')->middleware('is_admin')->group(function () {
         Route::resource('pages', Admin\PageController::class)->only(['edit', 'update']);
