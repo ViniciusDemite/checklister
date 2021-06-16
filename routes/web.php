@@ -15,9 +15,7 @@ use App\Http\Controllers\User;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', 'welcome');
 
 Auth::routes();
 
